@@ -91,7 +91,7 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
 
 2.  **Generate Plan:**
     *   Read the confirmed `spec.md` content for this track.
-    *   Resolve and read the **Workflow** file (Default: `conductor/workflow.md`).
+    *   Resolve and read the **Workflow** file (via the **Universal File Resolution Protocol** using the project's index file).
     *   Generate a `plan.md` with a hierarchical list of Phases, Tasks, and Sub-tasks.
     *   **CRITICAL:** The plan structure MUST adhere to the methodology in the **Workflow** file (e.g., TDD tasks for "Write Tests" and "Implement").
     *   Include status markers `[ ]` for **EVERY** task and sub-task. The format must be:

@@ -32,7 +32,7 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
 2.  **Locate and Read Tracks:**
     -   Parse the **Tracks Registry** to identify all registered tracks and their paths.
         *   **Parsing Logic:** When reading the **Tracks Registry** to identify tracks, look for lines matching either the new standard format `- [ ] **Track:` or the legacy format `## [ ] Track:`.
-    -   For each track, resolve and read its **Implementation Plan** (using **Universal File Resolution Protocol**, checking `conductor/tracks/<track_id>/index.md` if available).
+    -   For each track, resolve and read its **Implementation Plan** (using **Universal File Resolution Protocol** via the track's index file).
 
 ### 2.2 Parse and Summarize Plan
 1.  **Parse Content:**
