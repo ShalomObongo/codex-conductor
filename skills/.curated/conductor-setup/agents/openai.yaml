@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conductor Setup"
+  short_description: "Initialize or resume Conductor project setup"
+  default_prompt: "Use $conductor-setup to initialize this repository for Conductor workflows."

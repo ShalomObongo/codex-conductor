@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conductor Implement"
+  short_description: "Execute Conductor plan tasks for a track"
+  default_prompt: "Use $conductor-implement to execute the next track plan tasks."

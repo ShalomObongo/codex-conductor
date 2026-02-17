@@ -11,7 +11,21 @@ permissions:
 name: release-please
 
 jobs:
+  validate-skills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build shared skill references
+        run: python3 scripts/build_skills.py
+      - name: Validate skills
+        run: python3 scripts/validate_skills.py
+
   release-please:
+    needs: validate-skills
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4

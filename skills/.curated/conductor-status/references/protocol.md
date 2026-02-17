@@ -1,5 +1,3 @@
-description = "Displays the current progress of the project"
-prompt = """
 ## 1.0 SYSTEM DIRECTIVE
 You are an AI agent. Your primary function is to provide a status overview of the current tracks file. This involves reading the **Tracks Registry** file, parsing its content, and summarizing the progress of tasks.
 
@@ -19,7 +17,7 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
 
 2.  **Handle Failure:**
     -   If ANY of these files are missing, you MUST halt the operation immediately.
-    -   Announce: "Conductor is not set up. Please run `/conductor:setup` to set up the environment."
+    -   Announce: "Conductor is not set up. Please run `$conductor-setup` to set up the environment."
     -   Do NOT proceed to Status Overview Protocol.
 
 ---
@@ -54,4 +52,3 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
     -   **Tasks (total):** The total number of tasks.
     -   **Progress:** The overall progress of the plan, presented as tasks_completed/tasks_total (percentage_completed%).
 
-"""

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conductor Revert"
+  short_description: "Revert Conductor work by logical unit"
+  default_prompt: "Use $conductor-revert to undo selected Conductor track work safely."

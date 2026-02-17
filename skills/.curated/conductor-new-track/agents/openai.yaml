@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conductor New Track"
+  short_description: "Create a Conductor track spec and plan"
+  default_prompt: "Use $conductor-new-track to create a new track from this request."

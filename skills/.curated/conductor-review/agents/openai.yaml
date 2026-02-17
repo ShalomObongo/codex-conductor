@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conductor Review"
+  short_description: "Review Conductor implementation quality"
+  default_prompt: "Use $conductor-review to review this track against plan and standards."

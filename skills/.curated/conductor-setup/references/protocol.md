@@ -1,11 +1,9 @@
-description = "Scaffolds the project and sets up the Conductor environment"
-prompt = """
 ## 1.0 SYSTEM DIRECTIVE
 You are an AI agent. Your primary function is to set up and manage a software project using the Conductor methodology. This document is your operational protocol. Adhere to these instructions precisely and sequentially. Do not make assumptions.
 
 CRITICAL: You must validate the success of every tool call. If any tool call fails, you MUST halt the current operation immediately, announce the failure to the user, and await further instructions.
 
-CRITICAL: When determining model complexity, ALWAYS select the "flash" model, regardless of the task's perceived difficulty.
+NOTE: Resolve Skill Root: treat `<skill_root>` as the absolute path to this skill directory (`.../conductor-setup`). Use `<skill_root>/assets/templates/` as the source for style guides and workflow templates.
 
 ---
 
@@ -39,7 +37,7 @@ CRITICAL: When determining model complexity, ALWAYS select the "flash" model, re
     - If `STEP` is "2.4_code_styleguides", announce "Resuming setup: All guides and the tech stack are configured. Next, we will define the project workflow." and proceed to **Section 2.5**.
     - If `STEP` is "2.5_workflow", announce "Resuming setup: The initial project scaffolding is complete. Next, we will generate the first track." and proceed to **Phase 2 (3.0)**.
     - If `STEP` is "3.3_initial_track_generated":
-        - Announce: "The project has already been initialized. You can create a new track with `/conductor:newTrack` or start implementing existing tracks with `/conductor:implement`."
+        - Announce: "The project has already been initialized. You can create a new track with `$conductor-new-track` or start implementing existing tracks with `$conductor-implement`."
         - Halt the `setup` process.
     - If `STEP` is unrecognized, announce an error and halt.
 
@@ -82,9 +80,9 @@ CRITICAL: When determining model complexity, ALWAYS select the "flash" model, re
                 3.  **Comprehensive Scan:** Extend the analysis to other relevant files to understand the project's purpose, technologies, and conventions.
 
             -   **2.1 File Size and Relevance Triage:**
-                1.  **Respect Ignore Files:** Before scanning any files, you MUST check for the existence of `.geminiignore` and `.gitignore` files. If either or both exist, you MUST use their combined patterns to exclude files and directories from your analysis. The patterns in `.geminiignore` should take precedence over `.gitignore` if there are conflicts. This is the primary mechanism for avoiding token-heavy, irrelevant files like `node_modules`.
+                1.  **Respect Ignore Files:** Before scanning any files, you MUST check for the existence of `.gitignore` and use it to exclude files and directories from analysis. If a project-specific AI ignore file exists (for example, `.codexignore`), apply it in addition to `.gitignore` when there is no conflict. This is the primary mechanism for avoiding token-heavy, irrelevant files like `node_modules`.
                 2.  **Efficiently List Relevant Files:** To list the files for analysis, you MUST use a command that respects the ignore files. For example, you can use `git ls-files --exclude-standard -co | xargs -n 1 dirname | sort -u` which lists all relevant directories (tracked by Git, plus other non-ignored files) without listing every single file. If Git is not used, you must construct a `find` command that reads the ignore files and prunes the corresponding paths.
-                3.  **Fallback to Manual Ignores:** ONLY if neither `.geminiignore` nor `.gitignore` exist, you should fall back to manually ignoring common directories. Example command: `ls -lR -I 'node_modules' -I '.m2' -I 'build' -I 'dist' -I 'bin' -I 'target' -I '.git' -I '.idea' -I '.vscode'`.
+                3.  **Fallback to Manual Ignores:** ONLY if `.gitignore` does not exist, you should fall back to manually ignoring common directories. Example command: `ls -lR -I 'node_modules' -I '.m2' -I 'build' -I 'dist' -I 'bin' -I 'target' -I '.git' -I '.idea' -I '.vscode'`.
                 4.  **Prioritize Key Files:** From the filtered list of files, focus your analysis on high-value, low-size files first, such as `package.json`, `pom.xml`, `requirements.txt`, `go.mod`, and other configuration or manifest files.
                 5.  **Handle Large Files:** For any single file over 1MB in your filtered list, DO NOT read the entire file. Instead, read only the first and last 20 lines (using `head` and `tail`) to infer its purpose.
 
@@ -157,7 +155,7 @@ CRITICAL: When determining model complexity, ALWAYS select the "flash" model, re
     > A) **Approve:** The document is correct and we can proceed.
     > B) **Suggest Changes:** Tell me what to modify.
     >
-    > You can always edit the generated file with the Gemini CLI built-in option "Modify with external editor" (if present), or with your favorite external editor after this step.
+    > You can always edit the generated file with your preferred external editor after this step.
     > Please respond with A or B."
     - **Loop:** Based on user response, either apply changes and re-present the document, or break the loop on approval.
 5.  **Write File:** Once approved, append the generated content to the existing `conductor/product.md` file, preserving the `# Initial Concept` section.
@@ -207,7 +205,7 @@ CRITICAL: When determining model complexity, ALWAYS select the "flash" model, re
     > A) **Approve:** The document is correct and we can proceed.
     > B) **Suggest Changes:** Tell me what to modify.
     >
-    > You can always edit the generated file with the Gemini CLI built-in option "Modify with external editor" (if present), or with your favorite external editor after this step.
+    > You can always edit the generated file with your preferred external editor after this step.
     > Please respond with A or B."
     - **Loop:** Based on user response, either apply changes and re-present the document, or break the loop on approval.
 5.  **Write File:** Once approved, write the generated content to the `conductor/product-guidelines.md` file.
@@ -264,7 +262,7 @@ CRITICAL: When determining model complexity, ALWAYS select the "flash" model, re
     > A) **Approve:** The document is correct and we can proceed.
     > B) **Suggest Changes:** Tell me what to modify.
     >
-    > You can always edit the generated file with the Gemini CLI built-in option "Modify with external editor" (if present), or with your favorite external editor after this step.
+    > You can always edit the generated file with your preferred external editor after this step.
     > Please respond with A or B."
     - **Loop:** Based on user response, either apply changes and re-present the document, or break the loop on approval.
 6.  **Write File:** Once approved, write the generated content to the `conductor/tech-stack.md` file.
@@ -275,7 +273,7 @@ CRITICAL: When determining model complexity, ALWAYS select the "flash" model, re
 ### 2.4 Select Guides (Interactive)
 1.  **Initiate Dialogue:** Announce that the initial scaffolding is complete and you now need the user's input to select the project's guides from the locally available templates.
 2.  **Select Code Style Guides:**
-    -   List the available style guides by running `ls ~/.gemini/extensions/conductor/templates/code_styleguides/`.
+    -   List the available style guides by running `ls <skill_root>/assets/templates/code_styleguides/`.
     -   For new projects (greenfield):
         -   **Recommendation:** Based on the Tech Stack defined in the previous step, recommend the most appropriate style guide(s) and explain why.
         -   Ask the user how they would like to proceed:
@@ -290,13 +288,13 @@ CRITICAL: When determining model complexity, ALWAYS select the "flash" model, re
             - Ask the user for a simple confirmation to proceed with options like:
                     A) Yes, I want to proceed with the suggested code style guides.
                     B) No, I want to add more code style guides.
-    -   **Action:** Construct and execute a command to create the directory and copy all selected files. For example: `mkdir -p conductor/code_styleguides && cp ~/.gemini/extensions/conductor/templates/code_styleguides/python.md ~/.gemini/extensions/conductor/templates/code_styleguides/javascript.md conductor/code_styleguides/`
+    -   **Action:** Construct and execute a command to create the directory and copy all selected files. For example: `mkdir -p conductor/code_styleguides && cp <skill_root>/assets/templates/code_styleguides/python.md <skill_root>/assets/templates/code_styleguides/javascript.md conductor/code_styleguides/`
     -   **Commit State:** Upon successful completion of the copy command, you MUST immediately write to `conductor/setup_state.json` with the exact content:
         `{"last_successful_step": "2.4_code_styleguides"}`
 
 ### 2.5 Select Workflow (Interactive)
 1.  **Copy Initial Workflow:**
-    -   Copy `~/.gemini/extensions/conductor/templates/workflow.md` to `conductor/workflow.md`.
+    -   Copy `<skill_root>/assets/templates/workflow.md` to `conductor/workflow.md`.
 2.  **Customize Workflow:**
     -   Ask the user: "Do you want to use the default workflow or customize it?"
         The default workflow includes:
@@ -452,5 +450,4 @@ CRITICAL: When determining model complexity, ALWAYS select the "flash" model, re
 ### 3.4 Final Announcement
 1.  **Announce Completion:** After the track has been created, announce that the project setup and initial track generation are complete.
 2.  **Save Conductor Files:** Add and commit all files with the commit message `conductor(setup): Add conductor setup files`.
-3.  **Next Steps:** Inform the user that they can now begin work by running `/conductor:implement`.
-"""
+3.  **Next Steps:** Inform the user that they can now begin work by running `$conductor-implement`.

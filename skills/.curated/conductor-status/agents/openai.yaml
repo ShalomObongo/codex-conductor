@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conductor Status"
+  short_description: "Summarize Conductor track and plan progress"
+  default_prompt: "Use $conductor-status to summarize progress and identify blockers."
