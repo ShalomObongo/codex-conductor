@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Synced Conductor skill protocols with upstream Conductor updates through 2026-02-20, including interactive confirmation/approval flow improvements in:
+  - `conductor-setup`
+  - `conductor-new-track`
+  - `conductor-implement`
+  - `conductor-review`
+  - `conductor-revert`
+- Added Codex compatibility notes for upstream `ask_user` interactions and model-selection directives.
+- Added Codex Plan mode warning to `README.md` for Conductor workflow consistency.
+- Updated release workflow upload step to use an environment variable for `tag_name` interpolation safety.
+
 ## 1.0.0 (2026-02-17)
 
 ### Breaking Changes

@@ -8,6 +8,10 @@ It turns Codex into a proactive project manager that follows a strict protocol t
 Instead of jumping directly into code, Conductor enforces a predictable lifecycle:
 **Context -> Spec & Plan -> Implement -> Review -> Revert (if needed)**.
 
+> [!WARNING]
+> **Do not mix Conductor with Codex Plan mode in the same run**
+> Conductor already owns its own planning/approval lifecycle. When running Conductor skills, stay in Codex Default mode to avoid state conflicts.
+
 ## Why Conductor
 
 - **Plan before build**: Create explicit specs and implementation plans before coding.
